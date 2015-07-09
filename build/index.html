@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<title>gravity</title>
+	<script type="text/javascript" src="gravity.js"></script>
+	
+	<!--
+	<script type="text/javascript">
+        document.write('<link rel="apple-touch-startup-image" href="assets/startup'+(navigator.platform=='iPad'?'_ipad':'')+'.jpg">');
+    </script>
+    <link rel="apple-touch-icon" href="assets/icon.png"/>
+	-->
+	
+	<style>
+	body {
+		background: #1B285C;
+		background: url(assets/stars.png) repeat;
+	}
+	</style>
+	
+	<script type="text/javascript" charset="utf-8">
+
+    // Call onDeviceReady when PhoneGap is loaded.
+    //
+    // At this point, the document has loaded but phonegap.js has not.
+    // When PhoneGap is loaded and talking with the native device,
+    // it will call the event `deviceready`.
+    //
+    function onLoad() {
+		//
+		if (typeof PhoneGap !== "undefined")
+			document.addEventListener("deviceready", onDeviceReady, false);
+		else	
+			gravity.start();
+    }
+
+    // PhoneGap is loaded and it is now safe to make calls PhoneGap methods
+    //
+    function onDeviceReady() {
+        // Now safe to use the PhoneGap API
+		document.addEventListener("pause", gravity.pause, false);
+		document.addEventListener("resume", gravity.resume, false);
+		
+		gravity.start();
+    }
+
+    </script>
+
+</head>
+
+<body onload="onLoad()"></body>
+
+</html>

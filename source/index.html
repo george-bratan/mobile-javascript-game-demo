@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<title>gravity</title>
+	<script type="text/javascript" src="../closure/closure/goog/base.js"></script>
+	<script type="text/javascript" src="gravity.js"></script>
+	
+	<script type="text/javascript" charset="utf-8">
+
+    // Call onDeviceReady when PhoneGap is loaded.
+    //
+    // At this point, the document has loaded but phonegap.js has not.
+    // When PhoneGap is loaded and talking with the native device,
+    // it will call the event `deviceready`.
+    //
+    function onLoad() {
+		//
+		if (typeof PhoneGap !== "undefined")
+			document.addEventListener("deviceready", onDeviceReady, false);
+		else	
+			gravity.start();
+    }
+
+    // PhoneGap is loaded and it is now safe to make calls PhoneGap methods
+    //
+    function onDeviceReady() {
+        // Now safe to use the PhoneGap API
+		document.addEventListener("pause", gravity.pause, false);
+		document.addEventListener("resume", gravity.resume, false);
+		
+		gravity.start();
+    }
+	
+	function delegate_setup(onpurchase, onfailed) {
+		//
+		if (typeof PhoneGap == "undefined")
+			return;
+		
+		window.plugins.inAppPurchaseManager.onPurchased = onpurchased;
+		window.plugins.inAppPurchaseManager.onFailed = onfailed;
+	}
+	
+	function delegate_purchase(pid, onsuccess, onfailed) {
+		//
+		if (typeof PhoneGap == "undefined")
+			return;
+		
+		window.plugins.inAppPurchaseManager.requestProductData(pid, onsuccess, onfailed);
+	}
+	
+	function delegate_purchase_final(pid, q) {
+		//
+		if (typeof PhoneGap == "undefined")
+			return;
+		
+		window.plugins.inAppPurchaseManager.makePurchase(pid, q);
+	}
+
+    </script>
+	
+	<style>
+	body {
+		background: #1B285C;
+		background: url(assets/stars.png) repeat;
+		/*
+		background: -webkit-gradient(radial, 50% 50%, 10, 50% 50%, 850, from(#8EA9E8), to(#1B285C), color-stop(.6,#1D31B3));
+		background: -moz-radial-gradient(center 45deg, circle farthest-side, #8EA9E8 0%, #1D31B3 60%, #1B285C 100%);
+		*/
+	}
+	</style>
+
+</head>
+
+<body onload="onLoad()"></body>
+
+</html>
